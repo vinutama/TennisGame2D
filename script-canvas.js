@@ -15,6 +15,7 @@ const PADDLE_HEIGHT = 100;
 const WINNING_SCORE = 5;
 
 function mousePosition(position) {
+    //FIND A RELATIVE MOUSE POSITION
     let rect = canvas.getBoundingClientRect(),
         root = document.documentElement,
         mouseHorizon = position.clientX - rect.left - root.scrollLeft,
@@ -26,6 +27,7 @@ function mousePosition(position) {
 }
 
 function mouseClick() {
+    //CLICK TO START A GAME  AND RESET ON WIN OR LOSE SCREEN
     if (winScreen) {
         playerOneScore = 0;
         computerScore = 0;
@@ -36,21 +38,25 @@ function mouseClick() {
 window.onload = function () {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
+    //Create motions ball movement on the canvas per sec.
     let fps = 30;
     setInterval(function () {
         ballMovement();
         object();
     }, 1000 / fps);
-
+    
+    //Click to reset a game
     canvas.addEventListener('mousedown', mouseClick)
 
     canvas.addEventListener('mousemove', function (position) {
+        //Create a function to moving the mouse
         let mousePos = mousePosition(position);
         paddlePlayerOne = mousePos.y - (PADDLE_HEIGHT / 2);
     });
 }
 
 function resetBall() {
+    //reset in the middle of canvas if each one hit a point
     if (computerScore >= WINNING_SCORE || playerOneScore >= WINNING_SCORE) {
         winScreen = true;
     }
@@ -60,6 +66,7 @@ function resetBall() {
 }
 
 function AImovement() {
+    //Control AImovement
     let paddleComputerCenter = paddleComputer + (PADDLE_HEIGHT / 2);
     if (paddleComputerCenter < ballVertical - 35) {
         paddleComputer += 8;
@@ -69,33 +76,41 @@ function AImovement() {
 }
 
 function ballMovement() {
+    //return the winScreen if reach WINNING_SCORE
     if (winScreen) {
         return;
     }
+    //Call the AImovement function
     AImovement();
+    //SET ball movement
     ballHorizon += speedBallHorizon;
     ballVertical += speedBallVertical;
+    //SET a force ball bounces into the paddle computer
     if (ballHorizon > canvas.width) {
         if (ballVertical > paddleComputer && ballVertical < paddleComputer + PADDLE_HEIGHT) {
             speedBallHorizon = -speedBallHorizon;
 
             let hitHorizon = ballVertical - (paddleComputer + PADDLE_HEIGHT / 2);
             speedBallVertical = hitHorizon * 0.35;
+          //IF miss set playerscore and call resetBall function.
         } else {
             playerOneScore++;
             resetBall();
         }
     }
+    //SET a force ball bounces into the paddle player
     if (ballHorizon < 0) {
         if (ballVertical > paddlePlayerOne && ballVertical < paddlePlayerOne + PADDLE_HEIGHT) {
             speedBallHorizon = -speedBallHorizon;
 
             let hitHorizon = ballVertical - (paddlePlayerOne + PADDLE_HEIGHT / 2);
             speedBallVertical = hitHorizon * 0.35;
+         //IF miss set computerScore and call resetBall function.
         } else {
             computerScore++;
             resetBall();
         }
+        //SET speedball when hit paddle 
     }
     if (ballVertical > canvas.height) {
         speedBallVertical = -speedBallVertical;
