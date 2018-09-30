@@ -102,7 +102,7 @@ function ballMovement() {
     if (ballHorizon < 0) {
         if (ballVertical > paddlePlayerOne && ballVertical < paddlePlayerOne + PADDLE_HEIGHT) {
             speedBallHorizon = -speedBallHorizon;
-
+            //SET if ball hit on the edge of the bottom or top paddles multiple the speed
             let hitHorizon = ballVertical - (paddlePlayerOne + PADDLE_HEIGHT / 2);
             speedBallVertical = hitHorizon * 0.35;
          //IF miss set computerScore and call resetBall function.
