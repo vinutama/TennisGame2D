@@ -61,9 +61,9 @@ function resetBall() {
 
 function AImovement() {
     let paddleComputerCenter = paddleComputer + (PADDLE_HEIGHT / 2);
-    if (paddleComputerCenter < ballVertical - 35) {
+    if (paddleComputerCenter < ballVertical - 50) {
         paddleComputer += 5;
-    } else if (paddleComputerCenter > ballVertical + 35) {
+    } else if (paddleComputerCenter > ballVertical + 50) {
         paddleComputer -= 5;
     }
 }
