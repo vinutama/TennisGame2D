@@ -85,7 +85,7 @@ function ballMovement() {
     //SET ball movement
     ballHorizon += speedBallHorizon;
     ballVertical += speedBallVertical;
-    //SET a force ball bounces into the paddle computer
+    //SET a force ball bounces into the paddle computer and flip the direction of the ball
     if (ballHorizon > canvas.width) {
         if (ballVertical > paddleComputer && ballVertical < paddleComputer + PADDLE_HEIGHT) {
             speedBallHorizon = -speedBallHorizon;
@@ -98,7 +98,7 @@ function ballMovement() {
             resetBall();
         }
     }
-    //SET a force ball bounces into the paddle player
+    //SET a force ball bounces into the paddle player and flip the direction of the ball
     if (ballHorizon < 0) {
         if (ballVertical > paddlePlayerOne && ballVertical < paddlePlayerOne + PADDLE_HEIGHT) {
             speedBallHorizon = -speedBallHorizon;
